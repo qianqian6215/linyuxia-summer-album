@@ -172,6 +172,13 @@ h1 {
   border: 1px solid var(--line);
 }
 
+.button.listen-now {
+  color: #fff;
+  background: #d5794f;
+  border: 1px solid rgba(213, 121, 79, 0.24);
+  box-shadow: 0 14px 30px rgba(213, 121, 79, 0.2);
+}
+
 .button.contact {
   color: var(--ink);
   background: rgba(247, 212, 125, 0.36);
@@ -299,6 +306,23 @@ audio {
   height: 38px;
 }
 
+.immersive-trigger {
+  width: 100%;
+  min-height: 38px;
+  margin-top: 10px;
+  color: var(--blue);
+  font-weight: 800;
+  border: 1px solid rgba(23, 110, 168, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 248, 239, 0.62);
+  cursor: pointer;
+}
+
+.immersive-trigger:hover {
+  color: var(--ink);
+  border-color: rgba(23, 35, 51, 0.22);
+}
+
 .audio-placeholder {
   display: grid;
   place-items: center;
@@ -338,14 +362,193 @@ audio {
   font-size: 13px;
 }
 
+.immersive-player {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 54px);
+  color: #fffaf2;
+  background: rgba(12, 30, 43, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.immersive-player.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.player-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(12, 30, 43, 0.2), rgba(12, 30, 43, 0.84)),
+    var(--player-bg, none) center / cover no-repeat;
+  filter: blur(24px) saturate(1.08);
+  transform: scale(1.05);
+  opacity: 0.52;
+}
+
+.player-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(240px, 420px) minmax(0, 620px);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  width: min(1080px, 100%);
+}
+
+.player-cover-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
+}
+
+.player-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.player-main {
+  min-width: 0;
+}
+
+.player-kicker {
+  margin-bottom: 10px;
+  color: #f7d47d;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.player-main h2 {
+  margin-bottom: 12px;
+  font-size: clamp(36px, 6vw, 76px);
+  line-height: 1;
+}
+
+.player-note {
+  max-width: 40rem;
+  color: rgba(255, 250, 242, 0.74);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.player-progress {
+  height: 4px;
+  margin: 24px 0 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.player-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #f7d47d;
+  transition: width 160ms linear;
+}
+
+.lyric-window {
+  display: grid;
+  gap: 14px;
+  max-height: min(42vh, 340px);
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.lyric-line {
+  margin: 0;
+  color: rgba(255, 250, 242, 0.34);
+  font-size: clamp(20px, 3vw, 34px);
+  font-weight: 800;
+  line-height: 1.34;
+  transform: translateX(0);
+  transition:
+    color 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.lyric-line.is-active {
+  color: #fffaf2;
+  transform: translateX(12px);
+}
+
+.lyric-line.is-past {
+  color: rgba(255, 250, 242, 0.2);
+}
+
+.player-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.player-actions button,
+.player-close {
+  min-height: 42px;
+  color: #fffaf2;
+  font-weight: 900;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+.player-actions button {
+  min-width: 92px;
+  padding: 0 16px;
+}
+
+.player-actions .player-toggle {
+  color: #172333;
+  background: #f7d47d;
+  border-color: rgba(247, 212, 125, 0.4);
+}
+
+.player-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  width: 44px;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1;
+}
+
+body.has-open-player {
+  overflow: hidden;
+}
+
 @media (max-width: 900px) {
   .hero,
-  .artist {
+  .artist,
+  .player-shell {
     grid-template-columns: 1fr;
   }
 
   .hero {
     min-height: auto;
+  }
+
+  .player-shell {
+    width: min(560px, 100%);
+    gap: 22px;
+  }
+
+  .player-cover-wrap {
+    width: min(280px, 72vw);
   }
 
   .section-heading {
@@ -365,6 +568,24 @@ audio {
   }
 
   .hero-actions {
+    display: grid;
+  }
+
+  .immersive-player {
+    align-items: start;
+    overflow-y: auto;
+    padding-top: 70px;
+  }
+
+  .player-main h2 {
+    font-size: 36px;
+  }
+
+  .lyric-window {
+    max-height: none;
+  }
+
+  .player-actions {
     display: grid;
   }
 

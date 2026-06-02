@@ -39,6 +39,9 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#tracks">试听曲目</a>
+            <button class="button listen-now" type="button" data-open-player="0">
+              沉浸播放
+            </button>
             <a class="button secondary" href="#story">阅读专辑故事</a>
             <a
               class="button contact"
@@ -86,6 +89,9 @@
               <audio controls preload="metadata" src="./assets/audio/send-to-summer.mp3">
                 你的浏览器不支持音频播放。
               </audio>
+              <button class="immersive-trigger" type="button" data-open-player="0">
+                沉浸播放
+              </button>
             </div>
           </article>
 
@@ -100,6 +106,9 @@
               <audio controls preload="metadata" src="./assets/audio/blue-road-sign.mp3">
                 你的浏览器不支持音频播放。
               </audio>
+              <button class="immersive-trigger" type="button" data-open-player="1">
+                沉浸播放
+              </button>
             </div>
           </article>
 
@@ -114,6 +123,9 @@
               <audio controls preload="metadata" src="./assets/audio/convenience-breeze.mp3">
                 你的浏览器不支持音频播放。
               </audio>
+              <button class="immersive-trigger" type="button" data-open-player="2">
+                沉浸播放
+              </button>
             </div>
           </article>
 
@@ -128,6 +140,9 @@
               <audio controls preload="metadata" src="./assets/audio/back-to-first-island.mp3">
                 你的浏览器不支持音频播放。
               </audio>
+              <button class="immersive-trigger" type="button" data-open-player="3">
+                沉浸播放
+              </button>
             </div>
           </article>
 
@@ -142,6 +157,9 @@
               <audio controls preload="metadata" src="./assets/audio/sea-breeze-postcard.mp3">
                 你的浏览器不支持音频播放。
               </audio>
+              <button class="immersive-trigger" type="button" data-open-player="4">
+                沉浸播放
+              </button>
             </div>
           </article>
         </div>
@@ -174,6 +192,39 @@
       <p>© 2026 林屿夏 · 我们去环岛吧</p>
       <p>AI-assisted concept EP project</p>
     </footer>
+
+    <section
+      class="immersive-player"
+      aria-label="沉浸播放"
+      aria-hidden="true"
+      data-player-panel
+    >
+      <button class="player-close" type="button" aria-label="关闭沉浸播放" data-close-player>
+        ×
+      </button>
+      <div class="player-backdrop" data-player-backdrop></div>
+      <div class="player-shell">
+        <div class="player-cover-wrap">
+          <img class="player-cover" src="./assets/images/summer-postcard.jpg" alt="" data-player-cover />
+        </div>
+        <div class="player-main">
+          <p class="player-kicker">Now Playing</p>
+          <h2 data-player-title>寄往夏天</h2>
+          <p class="player-note" data-player-note>
+            出发前一晚，行李箱摊在地板上，群聊还在跳，窗外的蝉鸣把夏夜拉得很长。
+          </p>
+          <div class="player-progress" aria-hidden="true">
+            <span data-player-progress></span>
+          </div>
+          <div class="lyric-window" data-lyrics></div>
+          <div class="player-actions">
+            <button type="button" data-player-prev>上一首</button>
+            <button class="player-toggle" type="button" data-player-toggle>播放</button>
+            <button type="button" data-player-next>下一首</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script src="./script.js"></script>
   </body>

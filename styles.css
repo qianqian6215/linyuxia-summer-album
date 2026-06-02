@@ -172,6 +172,12 @@ h1 {
   border: 1px solid var(--line);
 }
 
+.button.contact {
+  color: var(--ink);
+  background: rgba(247, 212, 125, 0.36);
+  border: 1px solid rgba(213, 121, 79, 0.24);
+}
+
 .section {
   padding: clamp(52px, 8vw, 110px) clamp(18px, 5vw, 72px);
 }
@@ -196,6 +202,25 @@ h1 {
   font-size: 17px;
   line-height: 1.95;
 }
+
+.artist-contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 0 16px;
+  color: var(--blue);
+  font-weight: 800;
+  border: 1px solid rgba(23, 110, 168, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.artist-contact:hover {
+  color: var(--ink);
+  border-color: rgba(23, 35, 51, 0.24);
+}
+
 
 .section-heading {
   display: flex;

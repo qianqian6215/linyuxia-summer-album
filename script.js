@@ -8,4 +8,12 @@ players.forEach((player) => {
       }
     });
   });
+
+  player.addEventListener("ended", () => {
+    const nextPlayer = players[players.indexOf(player) + 1];
+
+    if (nextPlayer) {
+      nextPlayer.play().catch(() => {});
+    }
+  });
 });

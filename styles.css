@@ -526,6 +526,11 @@ audio {
   transform: translateX(12px);
 }
 
+.lyric-line:first-child:last-child,
+.lyric-line:first-child:nth-last-child(2) {
+  color: rgba(255, 250, 242, 0.82);
+}
+
 .lyric-line.is-past {
   color: rgba(255, 250, 242, 0.2);
 }

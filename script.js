@@ -11,6 +11,7 @@ const prevButton = document.querySelector("[data-player-prev]");
 const nextButton = document.querySelector("[data-player-next]");
 const closeButton = document.querySelector("[data-close-player]");
 const openButtons = Array.from(document.querySelectorAll("[data-open-player]"));
+const trackCards = Array.from(document.querySelectorAll(".track"));
 
 const tracks = [
   {
@@ -82,11 +83,34 @@ const tracks = [
 
 let currentIndex = 0;
 let activeLyricIndex = -1;
+let hasPlaybackStarted = false;
+
+trackCards.forEach((card) => {
+  const status = document.createElement("span");
+  status.className = "track-status";
+  status.setAttribute("aria-hidden", "true");
+  card.append(status);
+});
 
 const renderLyrics = (track) => {
   lyricWindow.innerHTML = track.lyrics
     .map((line) => `<p class="lyric-line">${line}</p>`)
     .join("");
+};
+
+const updateTrackStates = () => {
+  trackCards.forEach((card, index) => {
+    const isCurrent = hasPlaybackStarted && index === currentIndex;
+    const isPlaying = isCurrent && !players[index].paused;
+    const status = card.querySelector(".track-status");
+
+    card.classList.toggle("is-current", isCurrent);
+    card.classList.toggle("is-playing", isPlaying);
+
+    if (status) {
+      status.textContent = isPlaying ? "正在播放" : "当前曲目";
+    }
+  });
 };
 
 const setCurrentTrack = (index) => {
@@ -101,6 +125,7 @@ const setCurrentTrack = (index) => {
   renderLyrics(track);
   activeLyricIndex = -1;
   updateProgress();
+  updateTrackStates();
 };
 
 const openPlayer = (index, shouldPlay = true) => {
@@ -110,6 +135,7 @@ const openPlayer = (index, shouldPlay = true) => {
   document.body.classList.add("has-open-player");
 
   if (shouldPlay) {
+    hasPlaybackStarted = true;
     players[currentIndex].play().catch(() => {});
   }
 };
@@ -122,6 +148,7 @@ const closePlayer = () => {
 
 const updateToggle = () => {
   toggleButton.textContent = players[currentIndex]?.paused ? "播放" : "暂停";
+  updateTrackStates();
 };
 
 const updateProgress = () => {
@@ -147,12 +174,15 @@ const updateProgress = () => {
 };
 
 const playTrack = (index) => {
+  hasPlaybackStarted = true;
   setCurrentTrack(index);
   players[currentIndex].play().catch(() => {});
 };
 
 players.forEach((player, index) => {
   player.addEventListener("play", () => {
+    hasPlaybackStarted = true;
+
     players.forEach((other) => {
       if (other !== player) {
         other.pause();
@@ -177,6 +207,8 @@ players.forEach((player, index) => {
 
     if (nextPlayer) {
       playTrack(index + 1);
+    } else {
+      updateTrackStates();
     }
   });
 });

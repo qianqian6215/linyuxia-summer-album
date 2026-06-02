@@ -251,12 +251,55 @@ h1 {
 }
 
 .track {
+  position: relative;
   min-width: 220px;
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid rgba(255, 255, 255, 0.78);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 18px 44px rgba(31, 67, 86, 0.12);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.track.is-current {
+  border-color: rgba(213, 121, 79, 0.52);
+  box-shadow: 0 20px 52px rgba(213, 121, 79, 0.2);
+}
+
+.track.is-playing {
+  transform: translateY(-3px);
+  border-color: rgba(23, 110, 168, 0.72);
+  box-shadow: 0 22px 58px rgba(23, 110, 168, 0.24);
+}
+
+.track-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  color: #172333;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  border-radius: 999px;
+  background: rgba(247, 212, 125, 0.92);
+  box-shadow: 0 8px 24px rgba(23, 35, 51, 0.18);
+}
+
+.track.is-current .track-status {
+  display: inline-flex;
+}
+
+.track.is-playing .track-status {
+  color: #fff;
+  background: rgba(23, 110, 168, 0.92);
 }
 
 .track img,

@@ -346,6 +346,16 @@ const playTrack = (index) => {
   players[currentIndex].play().catch(() => {});
 };
 
+const syncToPlayingTrack = (index) => {
+  if (currentIndex !== index || panel.classList.contains("is-open")) {
+    setCurrentTrack(index);
+  } else {
+    updateTrackStates();
+  }
+
+  updateToggle();
+};
+
 players.forEach((player, index) => {
   player.addEventListener("play", () => {
     hasPlaybackStarted = true;
@@ -356,24 +366,22 @@ players.forEach((player, index) => {
       }
     });
 
-    if (panel.classList.contains("is-open")) {
-      setCurrentTrack(index);
-    } else {
-      currentIndex = index;
-    }
-
-    updateToggle();
+    syncToPlayingTrack(index);
   });
 
+  player.addEventListener("playing", () => syncToPlayingTrack(index));
   player.addEventListener("pause", updateToggle);
   player.addEventListener("timeupdate", updateProgress);
   player.addEventListener("loadedmetadata", updateProgress);
 
   player.addEventListener("ended", () => {
-    const nextPlayer = players[index + 1];
+    const nextIndex = index + 1;
+    const nextPlayer = players[nextIndex];
 
     if (nextPlayer) {
-      playTrack(index + 1);
+      hasPlaybackStarted = true;
+      setCurrentTrack(nextIndex);
+      nextPlayer.play().then(() => syncToPlayingTrack(nextIndex)).catch(() => {});
     } else {
       updateTrackStates();
     }

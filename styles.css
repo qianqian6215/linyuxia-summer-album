@@ -228,6 +228,39 @@ h1 {
   border-color: rgba(23, 35, 51, 0.24);
 }
 
+.mv {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.46fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+}
+
+.mv-copy {
+  max-width: 460px;
+}
+
+.mv-copy h2 {
+  margin-bottom: 18px;
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.05;
+}
+
+.mv-copy p {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.mv video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  background: #172333;
+  box-shadow: var(--shadow);
+}
+
 
 .section-heading {
   display: flex;
@@ -588,6 +621,7 @@ body.has-open-player {
 @media (max-width: 900px) {
   .hero,
   .artist,
+  .mv,
   .player-shell {
     grid-template-columns: 1fr;
   }
